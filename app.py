@@ -33,7 +33,7 @@ def send_mails():
           content = 'Hátralévő napok a következő lejáratig: %d (%s)' % (days_left, data['closest_expiration'])
           yield content
           yield '\n'
-          sendmail.send('',data['email'],'Könyvtári értesítő', content)
+          sendmail.send('info@omikk.buuu.com',data['email'],'Könyvtári értesítő', content)
           yield 'Sent.\n'
         else:
           yield ' -> No action needed. \n'
