@@ -26,9 +26,11 @@ def send(fromEmail, toEmail, subject, content):
 
   # Record the MIME types of both parts - text/plain and text/html.
   part1 = MIMEText(text, 'plain', "utf-8")
+  part2 = MIMEText(text, 'html', "utf-8")
 
   # Attach parts into message container.
   msg.attach(part1)
+  msg.attach(part2)
 
   # Open a connection to the SendGrid mail server
   s = smtplib.SMTP('smtp.sendgrid.net', 587)

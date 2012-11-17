@@ -2,6 +2,9 @@
 import os
 from flask import Flask
 from flask import stream_with_context, request, Response
+
+import mailvalidator
+
 from datetime import date
 import omikk
 import sendmail
@@ -25,6 +28,11 @@ def send_mails():
         yield user['uid']
         yield '\n'
         data = omikk.get_data(user['uid'],user['password'])
+        
+        if(not mailvalidator.validate(data['email'])):
+          yield "Mail not valid.\n\n"
+          continue
+        
         days_left = (data['closest_expiration'] - date.today()).days
         if(days_left<=7):
           yield "Sending mail to "
@@ -33,7 +41,7 @@ def send_mails():
           content = 'Hátralévő napok a következő lejáratig: %d (%s)' % (days_left, data['closest_expiration'])
           yield content
           yield '\n'
-          sendmail.send('notification@omikk.buuu.com',data['email'],'Könyvtári értesítő', content)
+          sendmail.send('"OMIKK lejárat értesítő bot" <notification@omikk-noreply.buuu.com>', data['email'], 'Könyvtári értesítő', content)
           yield 'Sent.\n'
         else:
           yield ' -> No action needed. \n'
