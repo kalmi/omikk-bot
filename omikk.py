@@ -9,7 +9,7 @@ import re
 import mechanize
 import cookielib
 
-def get_days_left(user,password):
+def get_data(user,password):
   # Browser
   br = mechanize.Browser()
 
@@ -87,5 +87,10 @@ def get_days_left(user,password):
   expirationDates.sort()
 
   closest = expirationDates[0]
-  return (expirationDates[0] - date.today()).days
+  
+  data = {}
+  data['closest_expiration'] = closest
+  data['email'] = email
+  
+  return data
   #print email
