@@ -55,7 +55,7 @@ def send_mails():
 def kalmi_days_left():
     user_data = omikk.get_data('12345678','DummyPassword')
     days_left = (user_data['closest_expiration'] - date.today()).days
-    return str(days_left) + " days left (" + user_data['closest_expiration'] +")"
+    return "%s days left (%s)" % (days_left, user_data['closest_expiration'])
 
 @app.route('/')
 def hello():
