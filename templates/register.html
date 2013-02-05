@@ -1,0 +1,13 @@
+﻿<!DOCTYPE HTML>
+<html>
+<body>
+<form method="post">
+{% if bad_attempt %}<div>Rossz név jelszó páros</div>{% endif %}
+<div>OMIKK felhasználónév: <input type="text" name="omikk_user" value="{{ request.form['omikk_user'] }}"></div>
+<div>OMIKK jelszó: <input type="password" name="omikk_pass" value="{{ request.form['omikk_pass'] }}"></div>
+<div>Értesítési e-mail: <input type="email" name="email" value="{{ request.form['email'] }}"></div>
+<div><input type="submit" value="Feliratkozás"></div>
+<div>Leiratkozási link minden kiküldött e-mailben szerepel.</div>
+</form>
+</body>
+</html>

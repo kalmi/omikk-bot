@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
 import smtplib
+import requests, json
 import os
 
 from email.mime.multipart import MIMEMultipart
@@ -43,3 +44,15 @@ def send(fromEmail, toEmail, subject, content):
   s.sendmail(fromEmail, toEmail, msg.as_string())
 
   s.quit()
+  
+def remove_from_unsubscribe_list(email):
+  payload = {
+    'api_user': os.environ['SENDGRID_USERNAME'],
+    'api_key': os.environ['SENDGRID_PASSWORD'],
+    'email': email
+  }
+  resp = requests.get("https://sendgrid.com/api/unsubscribes.delete.json", params=payload)
+  data = json.loads(resp.content)
+  
+  if(data[u'message'] != "success"):
+    return False

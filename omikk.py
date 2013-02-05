@@ -39,7 +39,7 @@ def get_data(user,password):
   br.form['bor_id'] = user
   br.form['bor_verification'] = password
   br.submit()
-
+  
   current_url = br.geturl()
   session_id = re.search(".*/F/(.*)", current_url).group(1)
 
@@ -48,16 +48,21 @@ def get_data(user,password):
   soup = BeautifulSoup(html)
   TDs = soup.findAll('td')
 
+  email = None
   for i in range(len(TDs)):
     if u"E-mail" in TDs[i].text:
       email = TDs[i+1]
       break
-      
+  
+  beiratkozas_ervenyesseg = None  
   for i in range(len(TDs)):
     if u"Beiratkozás érvényessége" in TDs[i].text:
       beiratkozas_ervenyesseg = TDs[i+1]
       break
-      
+  
+  if(not beiratkozas_ervenyesseg):
+    return False
+    
       
   email = email.text.replace("&nbsp;","").strip()
   beiratkozas_ervenyesseg = beiratkozas_ervenyesseg.text.replace("&nbsp;","").strip()
