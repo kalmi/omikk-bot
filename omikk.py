@@ -80,18 +80,20 @@ def get_data(user,password):
   soup = BeautifulSoup(html)
 
   expirationDates = []
+  try:
+    table = soup.findAll('table')[2]
+    TRs = table.findAll('tr')
+    for tr in TRs:
+      TDs = tr.findAll('td')
+      if TDs:
+        expirationDates.append(TDs[5].findAll('noscript')[0].text.strip())
+        
+    expirationDates = [date(int(x[:4]),int(x[4:6]),int(x[6:8])) for x in expirationDates]
+    expirationDates.sort()
 
-  table = soup.findAll('table')[2]
-  TRs = table.findAll('tr')
-  for tr in TRs:
-    TDs = tr.findAll('td')
-    if TDs:
-      expirationDates.append(TDs[5].findAll('noscript')[0].text.strip())
-      
-  expirationDates = [date(int(x[:4]),int(x[4:6]),int(x[6:8])) for x in expirationDates]
-  expirationDates.sort()
-
-  closest = expirationDates[0]
+    closest = expirationDates[0]
+  except IndexError:
+    closest = date.max
   
   data = {}
   data['closest_expiration'] = closest
