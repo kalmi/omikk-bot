@@ -9,6 +9,9 @@ import re
 import mechanize
 import cookielib
 
+import os
+BOT_USER_AGENT = os.environ['BOT_USER_AGENT']
+
 def get_data(user,password):
   # Browser
   br = mechanize.Browser()
@@ -32,7 +35,7 @@ def get_data(user,password):
   #br.set_debug_redirects(True)
   #br.set_debug_responses(True)
 
-  br.addheaders = [('User-agent', 'LejaratFigyeloBot - Ha gondja van vele, akkor a removed@gmail.com cimen tud kapcsolatba lepni velem.')]
+  br.addheaders = [('User-agent', BOT_USER_AGENT)]
 
   r = br.open('http://aleph.omikk.bme.hu/F?func=BOR-INFO')
   br.select_form(nr=0)
