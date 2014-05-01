@@ -42,7 +42,7 @@ class User(db.Model):
     def __repr__(self):
         return '<E-mail %r>' % self.omikk_uid
   
-@app.route('/hidden/EiRNnoEsuKwMcuOrhu6KZ7bnPgSTnkp2y6MLqobz/sendgrid_event')
+@app.route(os.environ['SEND_GRID_EVENT_URL'])
 def sendgrid_event(mail):
   event = request.form['event']
   email = request.form['email']
@@ -56,7 +56,7 @@ def sendgrid_event(mail):
     return 'UNKOWN EVENT'
   
   
-@app.route('/hidden/N4ndPLcaNTbpPpElP3Q116M44hrOV6HO84oaQIT4/send_mails')
+@app.route(os.environ['DAILY_TRIGGER_URL'])
 def send_mails():
     def generate():
       #yield '<meta http-equiv="content-Type" content="text/html; charset=utf-8">'
