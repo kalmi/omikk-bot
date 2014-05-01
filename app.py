@@ -21,6 +21,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+SOURCE_EMAIL = os.environ['SOURCE_EMAIL']
 db = SQLAlchemy(app)
 
 
@@ -83,7 +84,7 @@ def send_mails():
           content = 'Hátralévő napok a következő lejáratig: %d (%s)' % (days_left, data['closest_expiration'])
           yield content
           yield '\n'
-          sendmail.send('"OMIKK lejárat értesítő bot" <noreply@omikk.buuu.com>', data['email'], 'Könyvtári értesítő', content)
+          sendmail.send('"OMIKK lejárat értesítő bot" <'+SOURCE_EMAIL+'>', data['email'], 'Könyvtári értesítő', content)
           yield 'Sent.\n'
         else:
           yield ' -> No action needed. \n'
