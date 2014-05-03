@@ -57,3 +57,8 @@ Track record of the hosted version
 Well, it has been running fine for over a year now. Except... when my cron jobs did not run for a while, because my password expired on that box, and I had no idea that expired password would prevent the cron jobs from running. Now I know, and I will no longer ignore password expiration notification e-mails...
 
 I receive and check the log from the daily runs.
+
+License
+===
+
+The whole project is licensed under MIT license.
